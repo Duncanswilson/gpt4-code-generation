@@ -1,8 +1,3 @@
-Creating a complex robotic arm model with 7 degrees of freedom (DoF) or higher in MuJoCo can be quite involved. I'll provide you with an outline and an example of a 7-DoF robotic arm defined in an XML file for MuJoCo. You can then use `mujoco_py` to load and simulate this model.
-
-First, create a new XML file called `robotic_arm_7dof.xml` with the following content:
-
-```xml
 <mujoco model="7dof_robotic_arm">
     <compiler angle="degree" coordinate="local"/>
     <option integrator="RK4" timestep="0.002"/>
@@ -39,5 +34,13 @@ First, create a new XML file called `robotic_arm_7dof.xml` with the following co
                 </body>
             </body>
         </body>
-    </worldbody>
-
+    </worldbody>
+    <actuator>
+        <motor joint="joint1" ctrlrange="-100.0 100.0"/>
+        <motor joint="joint2" ctrlrange="-100.0 100.0"/>
+        <motor joint="joint3" ctrlrange="-100.0 100.0"/>
+        <motor joint="joint4" ctrlrange="-100.0 100.0"/>
+        <motor joint="joint5" ctrlrange="-100.0 100.0"/>
+        <motor joint="joint6" ctrlrange="-100.0 100.0"/>
+        <motor joint="joint7" ctrlrange="-100.0 100.0"/>
+      </actuator>
