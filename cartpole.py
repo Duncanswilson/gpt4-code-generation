@@ -14,7 +14,8 @@ def create_policy_network(input_dim, output_dim):
 
 # Choose an action according to the policy network output
 def choose_action(policy_network, state):
-    action_probs = policy_network(state[np.newaxis, :]).numpy().flatten()
+    print(state[0])
+    action_probs = policy_network(state[0]).numpy().flatten()
     action = np.random.choice(range(len(action_probs)), p=action_probs)
     return action
 
