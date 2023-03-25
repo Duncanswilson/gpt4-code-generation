@@ -15,7 +15,7 @@ def create_policy_network(input_dim, output_dim):
 # Choose an action according to the policy network output
 def choose_action(policy_network, state):
     print(state[0])
-    action_probs = policy_network(state[0]).numpy().flatten()
+    action_probs = policy_network(state[0][np.newaxis,:]).numpy().flatten()
     action = np.random.choice(range(len(action_probs)), p=action_probs)
     return action
 
@@ -48,6 +48,8 @@ if __name__ == '__main__':
     env = gym.make('CartPole')
     num_actions = env.action_space.n
     state_dim = env.observation_space.shape[0]
+    print(state_dim)
+    print(num_actions)
 
     policy_network = create_policy_network(state_dim, num_actions)
     optimizer = tf.keras.optimizers.Adam(lr=0.001)
