@@ -44,7 +44,7 @@ def train_policy_network(policy_network, states, actions, rewards, gamma=0.99):
 
 # Main training loop
 if __name__ == '__main__':
-    env = gym.make('Cartpole')
+    env = gym.make('CartPole')
     num_actions = env.action_space.n
     state_dim = env.observation_space.shape[0]
 
