@@ -1,4 +1,4 @@
-vercoming Disposable Vape Addiction and Exploring Generative AI: A Journey of Discovery
+# Overcoming Disposable Vape Addiction and Exploring Generative AI: A Journey of Discovery
 
 **Introduction**
 
