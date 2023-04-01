@@ -42,6 +42,7 @@ To create dense, softmax, and ReLU layers in C++ and Ethereum-compatible JavaScr
 
 Here's a simple implementation of the requested layers in C++:
 
+```cpp
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -95,10 +96,11 @@ std::vector<double> relu(const std::vector<double> &input) {
   }
   return output;
 }
-
+```
 
 And here's an implementation of the requested layers in Ethereum-compatible JavaScript using fixed-point arithmetic:
 
+```javascript
 const FIXED_POINT_FACTOR = 1e6;
 
 function multiplyFixedPoint(a, b) {
@@ -142,6 +144,6 @@ function relu(input) {
   }
   return output;
 }
-
+```
 
 Keep in mind that these implementations are simple and not optimized for performance. In practice, you might want to use a library such as Eigen for C++ or TensorFlow.js for JavaScript, which provide optimized and efficient implementations of these layers.
