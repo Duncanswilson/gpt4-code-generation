@@ -21,7 +21,7 @@ initializeNetwork :: [Int] -> IO Network
 initializeNetwork layers = do
     ws <- mapM (\(x, y) -> randn x y) (zip layers (tail layers))
     bs <- mapM (\x -> randn x 1) (tail layers)
-    return (ws, bs)
+    return (ws, fmap flatten bs)
 
 -- Feedforward through the network
 feedforward :: Network -> Vector Double -> Vector Double
@@ -40,9 +40,9 @@ updateNetwork (weights, biases) trainingData learningRate = do
     let num = fromIntegral . length $ trainingData
     let (weightUpdates, biasUpdates) = unzip . fmap (backpropagate (weights, biases)) $ trainingData
     let avgWeightUpdates = fmap (/ num) . sum . sequence $ weightUpdates
-    let avgBiasUpdates = fmap (/ num) . sum . sequence $ biasUpdates
     let newWeights = zipWith (-) weights avgWeightUpdates
-    let newBiases = zipWith (-) biases avgBiasUpdates
+    let avgBiasUpdates = fmap (/ num) . sum . transpose $ biasUpdates
+    let newBiases = zipWith (-) biases (fmap flatten avgBiasUpdates)    
     return (newWeights, newBiases)
 
 -- Backpropagation algorithm
