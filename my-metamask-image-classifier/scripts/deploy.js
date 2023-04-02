@@ -26,7 +26,17 @@ async function main() {
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+async function main() {
+     const ImageClassifier = await ethers.getContractFactory("ImageClassifier");
+     const imageClassifier = await ImageClassifier.deploy();
+     await imageClassifier.deployed();
+     console.log("ImageClassifier deployed to:", imageClassifier.address);
+   }
+
+   main()
+     .then(() => process.exit(0))
+     .catch((error) => {
+       console.error(error);
+       process.exit(1);
+     });
+
