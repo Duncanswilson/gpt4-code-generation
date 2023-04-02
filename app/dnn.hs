@@ -54,4 +54,4 @@ backpropagate (weights, biases) (x, y) = (weightUpdates, biasUpdates)
         delta = (last activations - y) * cmap sigmoid' (last weightedInputs)
         deltas = reverse . snd $ foldr (\(w, a, z) (d, acc) -> let newD = (tr w #> d) * cmap sigmoid' z in (newD, newD : acc)) (delta, []) (zip3 (init weights) (init activations) (init weightedInputs))
         weightUpdates = zipWith outer deltas (init activations)
-        biasUpdates = fmap asColumn deltas
+        biasUpdates = fmap flatten $ fmap asColumn deltas
