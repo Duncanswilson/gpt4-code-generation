@@ -35,15 +35,16 @@ trainNetwork network trainingData learningRate epochs = do
     trainNetwork newNetwork trainingData learningRate (epochs - 1)
 
 -- Update the network using the gradient descent
-updateNetwork :: Network -> [(Vector Double, Vector Double)] -> Double -> IO Network
-updateNetwork (weights, biases) trainingData learningRate = do
-    let num = fromIntegral . length $ trainingData
-    let (weightUpdates, biasUpdates) = unzip . fmap (backpropagate (weights, biases)) $ trainingData
-    let avgWeightUpdates = fmap (/ num) . sum . sequence $ weightUpdates
-    let newWeights = zipWith (-) weights avgWeightUpdates
-    let avgBiasUpdates = fmap (/ num) . sum . transpose $ biasUpdates
-    let newBiases = zipWith (-) biases (fmap flatten avgBiasUpdates)    
-    return (newWeights, newBiases)
+updateNetwork :: Network -> [(Vector Double, Vector Double)] -> Double -> Network
+updateNetwork (weights, biases) trainingData eta =
+    let
+        num = fromIntegral $ length trainingData
+        (weightUpdates, biasUpdates) = unzip $ fmap (\(x, y) -> backpropagate (weights, biases) (x, y)) trainingData
+        avgWeightUpdates = fmap (/ num) . sum <$> transpose weightUpdates
+        avgBiasUpdates = fmap (/ num) . sum <$> (transpose $ fmap asColumn <$> biasUpdates)
+        newWeights = zipWith (-) weights avgWeightUpdates
+        newBiases = zipWith (-) biases (fmap flatten <$> avgBiasUpdates)
+    in (newWeights, newBiases)
 
 -- Backpropagation algorithm
 backpropagate :: Network -> (Vector Double, Vector Double) -> ([Weights], [Biases])
