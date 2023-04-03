@@ -19,10 +19,32 @@ contract NeuralNetwork {
     }
 
     function initializeWeightsAndBiases() private {
-        // Add your logic to initialize weights and biases with random values here
-        // For simplicity, this example assumes that the weights and biases are already set
-        // and omits the random initialization logic
+        // Define the size of your weights and biases arrays
+        uint256 weightsSize = /* your weights array size */;
+        uint256 biasesSize = /* your biases array size */;
+
+        // Generate random numbers using keccak256 and the current block data
+        uint256 randomSeed = uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty)));
+
+        // Initialize weights
+        for (uint256 i = 0; i < weightsSize; i++) {
+            // Calculate the random number for the weight
+            int randomNumber = int(keccak256(abi.encodePacked(randomSeed, i))) % 1000; // example range: [-1000, 1000)
+
+            // Assign the random number to the weight
+            // Example: weights[i] = randomNumber;
+        }
+
+        // Initialize biases
+        for (uint256 i = 0; i < biasesSize; i++) {
+            // Calculate the random number for the bias
+            int randomNumber = int(keccak256(abi.encodePacked(randomSeed, i + weightsSize))) % 1000; // example range: [-1000, 1000)
+
+            // Assign the random number to the bias
+            // Example: biases[i] = randomNumber;
+        }
     }
+
 
     function relu(int256 x) private pure returns (int256) {
         return x > 0 ? x : 0;
